@@ -8,7 +8,8 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin {
+class _LoginScreenState extends State<LoginScreen>
+    with TickerProviderStateMixin {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -87,37 +88,11 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // Logo
-                      Container(
+                      Image.asset(
+                        'assets/logo.png',
                         width: 120,
                         height: 120,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 20,
-                              offset: const Offset(0, 10),
-                            ),
-                          ],
-                        ),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            CustomPaint(
-                              size: const Size(100, 100),
-                              painter: CircuitPainter(),
-                            ),
-                            Container(
-                              width: 60,
-                              height: 60,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                          ],
-                        ),
+                        fit: BoxFit.contain,
                       ),
 
                       const SizedBox(height: 24),
@@ -281,7 +256,8 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                                 onPressed: () {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content: Text('Forgot password feature coming soon'),
+                                      content: Text(
+                                          'Forgot password feature coming soon'),
                                     ),
                                   );
                                 },
@@ -312,21 +288,21 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                                 ),
                                 child: _isLoading
                                     ? const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                )
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: Colors.white,
+                                        ),
+                                      )
                                     : const Text(
-                                  'Login',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                  ),
-                                ),
+                                        'Login',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                               ),
                             ),
 
@@ -347,7 +323,8 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                                   onTap: () {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                        content: Text('Register feature coming soon'),
+                                        content: Text(
+                                            'Register feature coming soon'),
                                       ),
                                     );
                                   },
@@ -377,36 +354,3 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
   }
 }
 
-// Custom painter for circuit pattern in logo
-class CircuitPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = AppColors.primary
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke;
-
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2.5;
-
-    for (int i = 0; i < 8; i++) {
-      final angle = (i * 45) * (3.14159 / 180);
-      final x = center.dx +
-          radius * 0.6 * (i % 2 == 0 ? 1 : 0.8) * (i % 4 < 2 ? 1 : -1);
-      final y = center.dy +
-          radius * 0.6 * (i % 2 == 0 ? 0.8 : 1) * ((i + 1) % 4 < 2 ? 1 : -1);
-
-      canvas.drawLine(
-        center,
-        Offset(x, y),
-        paint,
-      );
-
-      canvas.drawCircle(Offset(x, y), 3, paint..style = PaintingStyle.fill);
-      paint.style = PaintingStyle.stroke;
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}

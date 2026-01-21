@@ -10,7 +10,8 @@ class SummaryScreen extends StatefulWidget {
   State<SummaryScreen> createState() => _SummaryScreenState();
 }
 
-class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProviderStateMixin {
+class _SummaryScreenState extends State<SummaryScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isSourceSelected = true;
 
@@ -82,159 +83,239 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
         children: [
           SizedBox(height: isTablet ? 16 : 8),
 
-          // Navigate to 1st Page Button
+          // ===== NAVIGATE TO 1ST PAGE BUTTON =====
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-            child: NavigateButton(
-              text: '1st Page Navigate',
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-
-          SizedBox(height: isTablet ? 20 : 16),
-
-          // Tabs
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-            child: Container(
-              height: 48,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 8,
+            padding: EdgeInsets.symmetric(horizontal: isTablet ? 14.0 : 10.0),
+            child: SizedBox(
+              height: 36,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF00C1E8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                ],
-              ),
-              child: TabBar(
-                controller: _tabController,
-                indicator: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(10),
+                  elevation: 0,
+                  padding: EdgeInsets.zero,
                 ),
-                indicatorSize: TabBarIndicatorSize.tab,
-                labelColor: Colors.white,
-                unselectedLabelColor: AppColors.textSecondary,
-                labelStyle: TextStyle(
-                  fontSize: isTablet ? 16 : 15,
-                  fontWeight: FontWeight.w600,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      '1st Page Navigate',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    const Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ],
                 ),
-                unselectedLabelStyle: TextStyle(
-                  fontSize: isTablet ? 16 : 15,
-                  fontWeight: FontWeight.normal,
-                ),
-                tabs: const [
-                  Tab(text: 'Summary'),
-                  Tab(text: 'SLD'),
-                  Tab(text: 'Data'),
-                ],
               ),
             ),
           ),
 
-          SizedBox(height: isTablet ? 20 : 16),
+          SizedBox(height: isTablet ? 10 : 8),
 
-          // Tab Content
+          // ===== WHITE CONTAINER WITH TABS + DATA CARDS ONLY =====
           Expanded(
-            child: TabBarView(
-              controller: _tabController,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: isTablet ? 30.0 : 20.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    // ===== TABS =====
+                    Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Container(
+                        height: 38,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.08),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: TabBar(
+                          controller: _tabController,
+                          indicator: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          labelColor: Colors.white,
+                          unselectedLabelColor: AppColors.textSecondary,
+                          labelStyle: TextStyle(
+                            fontSize: isTablet ? 16 : 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          unselectedLabelStyle: TextStyle(
+                            fontSize: isTablet ? 16 : 15,
+                            fontWeight: FontWeight.normal,
+                          ),
+                          tabs: const [
+                            Tab(text: 'Summary'),
+                            Tab(text: 'SLD'),
+                            Tab(text: 'Data'),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // ===== TAB CONTENT =====
+                    Expanded(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          _buildSummaryTab(isTablet, horizontalPadding),
+                          _buildSLDTab(),
+                          _buildDataTab(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // ACTION BUTTONS GRID
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: isTablet ? 30.0 : 20.0),
+            child: GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: isTablet ? 3 : 2,
+              mainAxisSpacing: isTablet ? 12 : 5,
+              crossAxisSpacing: isTablet ? 12 : 10,
+              childAspectRatio: isTablet ? 2.2 : 3.0,
               children: [
-                _buildSummaryTab(isTablet, horizontalPadding),
-                _buildSLDTab(),
-                _buildDataTab(),
+                _buildActionButtonWithImage(
+                  imagePath: 'assets/1.png',
+                  label: 'Analysis Pro',
+                  isTablet: isTablet,
+                ),
+                _buildActionButtonWithImage(
+                  imagePath: 'assets/2.png',
+                  label: 'G. Generator',
+                  isTablet: isTablet,
+                ),
+                _buildActionButtonWithImage(
+                  imagePath: 'assets/3.png',
+                  label: 'Plant Summary',
+                  isTablet: isTablet,
+                ),
+                _buildActionButtonWithImage(
+                  imagePath: 'assets/4.png',
+                  label: 'Natural Gas',
+                  isTablet: isTablet,
+                ),
+                _buildActionButtonWithImage(
+                  imagePath: 'assets/2.png',
+                  label: 'D. Generator',
+                  isTablet: isTablet,
+                ),
+                _buildActionButtonWithImage(
+                  imagePath: 'assets/6.png',
+                  label: 'Water Process',
+                  isTablet: isTablet,
+                ),
               ],
             ),
           ),
+
+          SizedBox(height: isTablet ? 12 : 10),
         ],
       ),
     );
   }
 
+  // ===== WIDGET #3: SINGLE CHILD SCROLL VIEW (SCROLLABLE CONTENT) =====
   Widget _buildSummaryTab(bool isTablet, double horizontalPadding) {
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
       child: Column(
         children: [
-          // Section Header
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Text(
-              'Electricity',
-              style: TextStyle(
-                fontSize: isTablet ? 16 : 14,
-                color: AppColors.textSecondary,
-                fontWeight: FontWeight.w500,
+          // ===== ELECTRICITY SECTION =====
+          Column(
+            children: [
+              Text(
+                'Electricity',
+                style: TextStyle(
+                  fontSize: isTablet ? 14 : 13,
+                  color: AppColors.textSecondary,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-          ),
+              Divider(thickness: 1, color: Colors.grey[300]),
 
-          // Circular Progress Chart
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: isTablet ? 250 : 200,
-                  height: isTablet ? 250 : 200,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      // Progress Circle
-                      CustomPaint(
-                        size: Size(isTablet ? 250 : 200, isTablet ? 250 : 200),
-                        painter: CircularProgressPainter(
-                          progress: 0.65,
-                          backgroundColor: AppColors.lightBlue.withOpacity(0.3),
-                          progressColor: AppColors.primary,
+              // Circular Progress Chart
+              SizedBox(
+                width: isTablet ? 200 : 140,
+                height: isTablet ? 200 : 140,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    CustomPaint(
+                      size: Size(isTablet ? 200 : 160, isTablet ? 200 : 160),
+                      painter: CircularProgressPainter(
+                        progress: 0.65,
+                        backgroundColor: AppColors.lightBlue.withOpacity(0.3),
+                        progressColor: AppColors.primary,
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Total Power',
+                          style: TextStyle(
+                            fontSize: isTablet ? 14 : 12,
+                            color: AppColors.textSecondary,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      // Center Text
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Total Power',
-                            style: TextStyle(
-                              fontSize: isTablet ? 16 : 14,
-                              color: AppColors.textSecondary,
-                              fontWeight: FontWeight.w500,
-                            ),
+                        const SizedBox(height: 2),
+                        Text(
+                          '5.53 kw',
+                          style: TextStyle(
+                            fontSize: isTablet ? 24 : 20,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '5.53 kw',
-                            style: TextStyle(
-                              fontSize: isTablet ? 32 : 28,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.textPrimary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
+              ),
 
-                SizedBox(height: isTablet ? 28 : 24),
+              SizedBox(height: isTablet ? 20 : 10),
 
-                // Source/Load Toggle
-                Row(
+              // Source/Load Toggle with Capsule Shape
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                padding: const EdgeInsets.all(0),
+                child: Row(
                   children: [
                     Expanded(
                       child: GestureDetector(
@@ -245,19 +326,19 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                            vertical: isTablet ? 14 : 12,
+                            vertical: isTablet ? 10 : 9,
                           ),
                           decoration: BoxDecoration(
                             color: _isSourceSelected
                                 ? AppColors.primary
-                                : Colors.grey.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(12),
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(25),
                           ),
                           alignment: Alignment.center,
                           child: Text(
                             'Source',
                             style: TextStyle(
-                              fontSize: isTablet ? 16 : 15,
+                              fontSize: isTablet ? 14 : 13,
                               fontWeight: FontWeight.w600,
                               color: _isSourceSelected
                                   ? Colors.white
@@ -267,7 +348,6 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
@@ -277,19 +357,18 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                            vertical: isTablet ? 14 : 12,
+                            vertical: isTablet ? 10 : 9,
                           ),
                           decoration: BoxDecoration(
                             color: !_isSourceSelected
                                 ? AppColors.primary
-                                : Colors.grey.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(12),
+                                : Colors.transparent,
                           ),
                           alignment: Alignment.center,
                           child: Text(
                             'Load',
                             style: TextStyle(
-                              fontSize: isTablet ? 16 : 15,
+                              fontSize: isTablet ? 14 : 13,
                               fontWeight: FontWeight.w600,
                               color: !_isSourceSelected
                                   ? Colors.white
@@ -301,41 +380,44 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
 
-          SizedBox(height: isTablet ? 20 : 16),
+          Divider(thickness: 1, color: Colors.grey[300]),
 
-          // Data View Cards
+          // ===== WIDGET #4: DATA VIEW CARDS =====
           _buildDataViewCard(
-            icon: Icons.solar_power,
+            icon: null,
+            imagePath: 'assets/solar.png',
             title: 'Data View',
             data1: '55505.63',
             data2: '58805.63',
             status: 'Active',
-            statusColor: Colors.green,
+            statusColor: Colors.blue,
             iconColor: AppColors.blue,
             isTablet: isTablet,
           ),
 
-          SizedBox(height: isTablet ? 12 : 10),
+          SizedBox(height: isTablet ? 10 : 4),
 
           _buildDataViewCard(
-            icon: Icons.factory,
+            icon: null,
+            imagePath: 'assets/tawer.png',
             title: 'Data Type 2',
             data1: '55505.63',
             data2: '58805.63',
             status: 'Active',
-            statusColor: Colors.green,
+            statusColor: Colors.blue,
             iconColor: AppColors.orange,
             isTablet: isTablet,
           ),
 
-          SizedBox(height: isTablet ? 12 : 10),
+          SizedBox(height: isTablet ? 10 : 4),
 
           _buildDataViewCard(
-            icon: Icons.wind_power,
+            icon: null,
+            imagePath: 'assets/Batery.png',
             title: 'Data Type 3',
             data1: '55505.63',
             data2: '58805.63',
@@ -344,65 +426,14 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
             iconColor: AppColors.cyan,
             isTablet: isTablet,
           ),
-
-          SizedBox(height: isTablet ? 20 : 16),
-
-          // Action Buttons Grid
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: isTablet ? 3 : 2,
-            mainAxisSpacing: isTablet ? 16 : 12,
-            crossAxisSpacing: isTablet ? 16 : 12,
-            childAspectRatio: isTablet ? 1.8 : 2.5,
-            children: [
-              _buildActionButton(
-                icon: Icons.analytics,
-                label: 'Analysis Pro',
-                iconColor: AppColors.cyan,
-                isTablet: isTablet,
-              ),
-              _buildActionButton(
-                icon: Icons.power,
-                label: 'G. Generator',
-                iconColor: AppColors.orange,
-                isTablet: isTablet,
-              ),
-              _buildActionButton(
-                icon: Icons.local_florist,
-                label: 'Plant Summary',
-                iconColor: AppColors.warning,
-                isTablet: isTablet,
-              ),
-              _buildActionButton(
-                icon: Icons.local_fire_department,
-                label: 'Natural Gas',
-                iconColor: AppColors.error,
-                isTablet: isTablet,
-              ),
-              _buildActionButton(
-                icon: Icons.electrical_services,
-                label: 'D. Generator',
-                iconColor: AppColors.orange,
-                isTablet: isTablet,
-              ),
-              _buildActionButton(
-                icon: Icons.water,
-                label: 'Water Process',
-                iconColor: AppColors.blue,
-                isTablet: isTablet,
-              ),
-            ],
-          ),
-
-          SizedBox(height: isTablet ? 32 : 24),
         ],
       ),
     );
   }
 
+  // ===== BUILD DATA VIEW CARD WIDGET (FIXED) =====
   Widget _buildDataViewCard({
-    required IconData icon,
+    IconData? icon,
     required String title,
     required String data1,
     required String data2,
@@ -410,11 +441,12 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
     required Color statusColor,
     required Color iconColor,
     required bool isTablet,
+    String? imagePath,
   }) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color(0xFFE6F5FF),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: Colors.grey.withOpacity(0.2),
@@ -422,28 +454,37 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 4,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Row(
         children: [
+          // Icon Container
           Container(
-            width: 50,
-            height: 50,
+            width: 44,
+            height: 44,
             decoration: BoxDecoration(
-              color: iconColor.withOpacity(0.2),
+              color: iconColor.withOpacity(0.15),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(
-              icon,
-              color: iconColor,
-              size: 28,
-            ),
+            padding: const EdgeInsets.all(6),
+            child: imagePath != null
+                ? Image.asset(
+                    imagePath,
+                    fit: BoxFit.contain,
+                  )
+                : Icon(
+                    icon,
+                    color: iconColor,
+                    size: 24,
+                  ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 12),
+
+          // Text Content
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -453,12 +494,12 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
                     Text(
                       title,
                       style: TextStyle(
-                        fontSize: isTablet ? 16 : 14,
+                        fontSize: isTablet ? 14 : 13,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 6),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8,
@@ -471,7 +512,7 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
                       child: Text(
                         status,
                         style: TextStyle(
-                          fontSize: 11,
+                          fontSize: 10,
                           fontWeight: FontWeight.w600,
                           color: statusColor,
                         ),
@@ -479,41 +520,43 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
                     ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
                 Text(
                   'Data 1 : $data1',
                   style: TextStyle(
-                    fontSize: isTablet ? 13 : 12,
+                    fontSize: isTablet ? 12 : 11,
                     color: AppColors.textSecondary,
+                    fontWeight: FontWeight.w500,
                   ),
-                  overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 3),
                 Text(
                   'Data 2 : $data2',
                   style: TextStyle(
-                    fontSize: isTablet ? 13 : 12,
+                    fontSize: isTablet ? 12 : 11,
                     color: AppColors.textSecondary,
+                    fontWeight: FontWeight.w500,
                   ),
-                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
           ),
+
+          // Chevron Arrow
           Icon(
             Icons.chevron_right,
-            color: AppColors.textSecondary,
-            size: 24,
+            color: AppColors.textSecondary.withOpacity(0.5),
+            size: 20,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildActionButton({
-    required IconData icon,
+  // ===== BUILD ACTION BUTTON WITH IMAGE =====
+  Widget _buildActionButtonWithImage({
+    required String imagePath,
     required String label,
-    required Color iconColor,
     required bool isTablet,
   }) {
     return GestureDetector(
@@ -524,32 +567,48 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.grey.withOpacity(0.08),
           borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Colors.grey.withOpacity(0.15),
+            width: 1,
+          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 4,
+              offset: const Offset(0, 1),
             ),
           ],
         ),
-        child: Column(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: isTablet ? 32 : 28,
-              color: iconColor,
+            Image.asset(
+              imagePath,
+              width: isTablet ? 32 : 28,
+              height: isTablet ? 32 : 28,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(
+                  Icons.image_not_supported,
+                  size: isTablet ? 32 : 28,
+                  color: Colors.grey,
+                );
+              },
             ),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: isTablet ? 14 : 12,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: isTablet ? 12 : 11,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
@@ -558,6 +617,7 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
     );
   }
 
+  // ===== BUILD SLD TAB =====
   Widget _buildSLDTab() {
     return Center(
       child: Column(
@@ -590,6 +650,7 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
     );
   }
 
+  // ===== BUILD DATA TAB =====
   Widget _buildDataTab() {
     return Center(
       child: Column(
@@ -623,7 +684,7 @@ class _SummaryScreenState extends State<SummaryScreen> with SingleTickerProvider
   }
 }
 
-// Custom Painter for Circular Progress
+// ===== CUSTOM PAINTER FOR CIRCULAR PROGRESS =====
 class CircularProgressPainter extends CustomPainter {
   final double progress;
   final Color backgroundColor;
@@ -649,7 +710,7 @@ class CircularProgressPainter extends CustomPainter {
 
     canvas.drawCircle(center, radius - strokeWidth / 2, backgroundPaint);
 
-    // Progress arc
+    // Progress circle
     final progressPaint = Paint()
       ..color = progressColor
       ..style = PaintingStyle.stroke

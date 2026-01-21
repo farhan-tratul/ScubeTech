@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
-import '../widgets/reusable_components.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,310 +14,142 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Define screen width helpers if needed, using standard padding from image
+    const double horizontalPadding = 16.0;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: const Color(0xFFF5F7FA), // Light greyish-blue background
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 1,
+        elevation: 0,
+        scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          icon: const Icon(Icons.arrow_back, color: Color(0xFF1F2937)),
+          onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
           '1st Page',
           style: TextStyle(
-            color: AppColors.textPrimary,
+            color: Color(0xFF1F2937),
             fontSize: 18,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
         ),
         centerTitle: true,
         actions: [
           Stack(
+            alignment: Alignment.center,
             children: [
               IconButton(
-                icon: const Icon(Icons.notifications_outlined,
-                    color: AppColors.textPrimary),
+                icon: const Icon(Icons.notifications_none_outlined,
+                    color: Color(0xFF1F2937), size: 26),
                 onPressed: () {},
               ),
               Positioned(
-                right: 8,
-                top: 8,
+                right: 10,
+                top: 10,
                 child: Container(
                   width: 8,
                   height: 8,
                   decoration: const BoxDecoration(
-                    color: Colors.red,
+                    color: Color(0xFFEF4444),
                     shape: BoxShape.circle,
                   ),
                 ),
               ),
             ],
           ),
+          const SizedBox(width: 8),
         ],
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.only(bottom: 30),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 12),
-
-            // Navigate to 2nd Page Button
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: NavigateButton(
-                text: '2nd Page Navigate',
-                onPressed: () {
-                  Navigator.pushNamed(context, '/summary');
-                },
-              ),
-            ),
-
             const SizedBox(height: 16),
 
-            // Metrics Grid (3 columns)
+            // 1. Navigation Button (Cyan Gradient)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: MetricCard(
-                          value: '10000 kW',
-                          label: 'Live AC Power',
-                          icon: Icons.bolt,
-                          iconColor: AppColors.green,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: MetricCard(
-                          value: '82.58 %',
-                          label: 'Plant Generation',
-                          icon: Icons.factory,
-                          iconColor: AppColors.blue,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: MetricCard(
-                          value: '85.61 %',
-                          label: 'Live PR',
-                          icon: Icons.analytics,
-                          iconColor: AppColors.purple,
-                        ),
-                      ),
-                    ],
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: Container(
+                height: 48,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF00C1E8), Color(0xFF00A9D4)],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
                   ),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: MetricCard(
-                          value: '27.58 %',
-                          label: 'Cumulative PR',
-                          icon: Icons.water_drop,
-                          iconColor: AppColors.blue,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: MetricCard(
-                          value: '10000 t',
-                          label: 'Return Inv',
-                          icon: Icons.refresh,
-                          iconColor: AppColors.orange,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: MetricCard(
-                          value: '10000 kWh',
-                          label: 'Total Energy',
-                          icon: Icons.energy_savings_leaf,
-                          iconColor: AppColors.pink,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            // Weather Widget
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: WeatherWidget(
-                temperature: '30°C',
-                windSpeed: '26 MPH / NW',
-                irradiance: '15.20 W/m²',
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            // Data Comparison Table
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  // Header
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: AppColors.border),
-                      ),
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF00C1E8).withOpacity(0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
                     ),
+                  ],
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () => Navigator.pushNamed(context, '/summary'),
+                    borderRadius: BorderRadius.circular(8),
                     child: Row(
-                      children: [
-                        const Expanded(
-                          flex: 2,
-                          child: Text(
-                            'Metrics',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.textPrimary,
-                            ),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          '2nd Page Navigate',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Expanded(
-                          child: Text(
-                            "Yesterday's Data",
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.textSecondary,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            "Today's Data",
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.textSecondary,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
+                        SizedBox(width: 8),
+                        Icon(Icons.arrow_forward_ios, color: Colors.white, size: 14),
                       ],
                     ),
                   ),
-
-                  // Data Rows
-                  const DataComparisonRow(
-                    label: 'AC Max Power',
-                    yesterdayValue: '1636.50 kW',
-                    todayValue: '2121.88 kW',
-                  ),
-                  const Divider(height: 1, indent: 16, endIndent: 16),
-                  const DataComparisonRow(
-                    label: 'Net Energy',
-                    yesterdayValue: '6439.16 kWh',
-                    todayValue: '4875.77 kWh',
-                  ),
-                  const Divider(height: 1, indent: 16, endIndent: 16),
-                  const DataComparisonRow(
-                    label: 'Specific Yield',
-                    yesterdayValue: '1.25 kWh/kWp',
-                    todayValue: '0.94 kWh/kWp',
-                  ),
-                  const Divider(height: 1, indent: 16, endIndent: 16),
-                  const DataComparisonRow(
-                    label: 'Net Energy',
-                    yesterdayValue: '6439.16 kWh',
-                    todayValue: '4875.77 kWh',
-                  ),
-                  const Divider(height: 1, indent: 16, endIndent: 16),
-                  const DataComparisonRow(
-                    label: 'Specific Yield',
-                    yesterdayValue: '1.25 kWh/kWp',
-                    todayValue: '0.94 kWh/kWp',
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            // System Info Cards
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12),
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppColors.lightBlue.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: AppColors.lightBlue.withOpacity(0.3),
-                  width: 1,
                 ),
               ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.solar_power,
-                    size: 24,
-                    color: AppColors.primary,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      'Total Num of PV Module  :  6372 pcs. (585 Wp each)',
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
-            // Grid of Info Cards
+            // 2. Metrics Grid (3x2)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
               child: Column(
                 children: [
                   Row(
                     children: [
                       Expanded(
-                        child: InfoCard(
-                          icon: Icons.ac_unit,
-                          title: 'Total AC Capacity',
-                          value: '3000 KW',
-                          iconColor: AppColors.cyan,
+                        child: _buildMetricCard(
+                          value: '10000 kW',
+                          label: 'Live AC Power',
+                          assetName: 'assets/live_ac.png',
+                          icon: Icons.bolt,
+                          color: const Color(0xFF22C55E), // Green
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: InfoCard(
-                          icon: Icons.electrical_services,
-                          title: 'Total DC Capacity',
-                          value: '3.727 KW',
-                          iconColor: AppColors.blue,
+                        child: _buildMetricCard(
+                          value: '82.58 %',
+                          label: 'Plant Generation',
+                          assetName: 'assets/plant_gen.png',
+                          icon: Icons.factory_outlined,
+                          color: const Color(0xFF00C1E8), // Cyan
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _buildMetricCard(
+                          value: '85.61 %',
+                          label: 'Live PR',
+                          assetName: 'assets/live_pr.png',
+                          icon: Icons.pie_chart_outline,
+                          color: const Color(0xFF8B5CF6), // Purple
                         ),
                       ),
                     ],
@@ -327,42 +158,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     children: [
                       Expanded(
-                        child: InfoCard(
-                          icon: Icons.calendar_today,
-                          title: 'Date of Commissioning',
-                          value: '17/07/2024',
-                          iconColor: AppColors.blue,
+                        child: _buildMetricCard(
+                          value: '27.58 %',
+                          label: 'Cumulative PR',
+                          assetName: 'assets/cumulative_pr.png',
+                          icon: Icons.speed,
+                          color: const Color(0xFF3B82F6), // Blue
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: InfoCard(
-                          icon: Icons.memory,
-                          title: 'Number of Inverter',
-                          value: '30',
-                          iconColor: AppColors.blue,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: InfoCard(
-                          icon: Icons.power,
-                          title: 'Total AC Capacity',
-                          value: '3000 KW',
-                          iconColor: AppColors.blue,
+                        child: _buildMetricCard(
+                          value: '10000 ৳',
+                          label: 'Return Inv',
+                          assetName: 'assets/return_pv.png',
+                          icon: Icons.currency_exchange,
+                          color: const Color(0xFFF97316), // Orange
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: InfoCard(
-                          icon: Icons.flash_on,
-                          title: 'Total DC Capacity',
-                          value: '3.727 MWp',
-                          iconColor: AppColors.blue,
+                        child: _buildMetricCard(
+                          value: '10000 kWh',
+                          label: 'Total Energy',
+                          assetName: 'assets/total_energy.png',
+                          icon: Icons.hub_outlined,
+                          color: const Color(0xFFD946EF), // Magenta
                         ),
                       ),
                     ],
@@ -373,52 +194,450 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 16),
 
-            // Expandable Energy Cards
+            // 3. Weather Widget (Split Card)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Row(
+                    children: [
+                      // Left: Temperature
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          color: Colors.white,
+                          child: Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    '30°C',
+                                    style: TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFF00C1E8), // Cyan text
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    'Module\nTemperature',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      height: 1.2,
+                                      color: Color(0xFF6B7280),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(width: 8),
+                              SizedBox(
+                                height: 60,
+                                width: 30,
+                                child: Image.asset(
+                                  'assets/thermometer.png',
+                                  fit: BoxFit.contain,
+                                  errorBuilder: (c, e, s) => const Icon(Icons.device_thermostat, color: Colors.orange, size: 40),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Right: Wind/Irradiation (Purple Gradient)
+                      Expanded(
+                        flex: 6,
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Color(0xFF8B5CF6), Color(0xFFA78BFA)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    '26 MPH / NW',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Wind Speed & Direction',
+                                    style: TextStyle(fontSize: 9, color: Colors.white70),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    '15.20 w/m²',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Effective Irradiation',
+                                    style: TextStyle(fontSize: 9, color: Colors.white70),
+                                  ),
+                                ],
+                              ),
+                              Image.asset(
+                                'assets/sun.png',
+                                width: 40,
+                                height: 40,
+                                errorBuilder: (c,e,s) => const Icon(Icons.wb_sunny, color: Colors.yellow, size: 30),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // 4. Data Comparison Table
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    // Table Header
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                      child: Row(
+                        children: const [
+                          Expanded(flex: 3, child: SizedBox()), // Spacer for label col
+                          Expanded(flex: 2, child: Text("Yesterday's Data", textAlign: TextAlign.center, style: TextStyle(fontSize: 11, color: Color(0xFF4B5563), fontWeight: FontWeight.w600))),
+                          Expanded(flex: 2, child: Text("Today's Data", textAlign: TextAlign.center, style: TextStyle(fontSize: 11, color: Color(0xFF4B5563), fontWeight: FontWeight.w600))),
+                        ],
+                      ),
+                    ),
+                    const Divider(height: 1, color: Color(0xFFE5E7EB)),
+                    _buildTableRow('AC Max Power', '1636.50 kW', '2121.88 kW'),
+                    const Divider(height: 1, indent: 16, endIndent: 16, color: Color(0xFFF3F4F6)),
+                    _buildTableRow('Net Energy', '6439.16 kWh', '4875.77 kWh'),
+                    const Divider(height: 1, indent: 16, endIndent: 16, color: Color(0xFFF3F4F6)),
+                    _buildTableRow('Specific Yield', '1.25 kWh/kWp', '0.94 kWh/kWp'),
+                    const Divider(height: 1, indent: 16, endIndent: 16, color: Color(0xFFF3F4F6)),
+                    _buildTableRow('Net Energy', '6439.16 kWh', '4875.77 kWh'),
+                    const Divider(height: 1, indent: 16, endIndent: 16, color: Color(0xFFF3F4F6)),
+                    _buildTableRow('Specific Yield', '1.25 kWh/kWp', '0.94 kWh/kWp'),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // 5. Info Banner
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: const Color(0xffEFF6FF), // Light blue tint
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.blue.withOpacity(0.1)),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: const Icon(Icons.solar_power, color: Color(0xFF3B82F6), size: 20),
+                    ),
+                    const SizedBox(width: 12),
+                    const Expanded(
+                      child: Text(
+                        'Total Num of PV Module  :  6372 pcs. (585 Wp each)',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF1F2937),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // 6. Info Grid (3x2)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
               child: Column(
                 children: [
-                  ExpandableEnergyCard(
-                    title: 'LT_01',
-                    powerValue: '495.505 kWp / 440 kW',
-                    isExpanded: _isLT01Expanded,
-                    onTap: () {
-                      setState(() {
-                        _isLT01Expanded = !_isLT01Expanded;
-                      });
-                    },
-                    metrics: {
-                      'Lifetime Energy': '352.96 MWh',
-                      'Prev. Meter Energy': '0.00 MWh',
-                      'Today Energy': '273.69 kWh',
-                      'Live Power': '352.96 MWh',
-                    },
+                  Row(
+                    children: [
+                      Expanded(child: _buildInfoCard('Total AC Capacity', '3000 KW', Icons.speed, Colors.cyan)),
+                      const SizedBox(width: 12),
+                      Expanded(child: _buildInfoCard('Total DC Capacity', '3.727 MWp', Icons.memory, Colors.blue)),
+                    ],
                   ),
                   const SizedBox(height: 12),
-                  ExpandableEnergyCard(
-                    title: 'LT_01',
-                    powerValue: '495.505 kWp / 440 kW',
-                    isExpanded: _isLT02Expanded,
-                    onTap: () {
-                      setState(() {
-                        _isLT02Expanded = !_isLT02Expanded;
-                      });
-                    },
-                    metrics: {
-                      'Lifetime Energy': '352.96 MWh',
-                      'Prev. Meter Energy': '0.00 MWh',
-                      'Today Energy': '273.69 kWh',
-                      'Live Power': '352.96 MWh',
-                    },
+                  Row(
+                    children: [
+                      Expanded(child: _buildInfoCard('Date of Commissioning', '17/07/2024', Icons.calendar_today, Colors.blue)),
+                      const SizedBox(width: 12),
+                      Expanded(child: _buildInfoCard('Number of Inverter', '30', Icons.dns, Colors.blue)),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(child: _buildInfoCard('Total AC Capacity', '3000 KW', Icons.speed, Colors.blue)),
+                      const SizedBox(width: 12),
+                      Expanded(child: _buildInfoCard('Total DC Capacity', '3.727 MWp', Icons.memory, Colors.blue)),
+                    ],
                   ),
                 ],
               ),
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
+
+            // 7. Expandable Energy Cards
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: Column(
+                children: [
+                  _buildExpandableRow(
+                    title: 'LT_01',
+                    power: '495.505 kWp / 440 kW',
+                    isExpanded: _isLT01Expanded,
+                    onTap: () => setState(() => _isLT01Expanded = !_isLT01Expanded),
+                  ),
+                  const SizedBox(height: 12),
+                  _buildExpandableRow(
+                    title: 'LT_01',
+                    power: '495.505 kWp / 440 kW',
+                    isExpanded: _isLT02Expanded,
+                    onTap: () => setState(() => _isLT02Expanded = !_isLT02Expanded),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  // --- Helper Widgets ---
+
+  Widget _buildMetricCard({required String value, required String label, required String assetName, required IconData icon, required Color color}) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6, offset: const Offset(0, 2)),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Image.asset(
+              assetName,
+              width: 20,
+              height: 20,
+              errorBuilder: (c, e, s) => Icon(icon, size: 20, color: color),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            value,
+            maxLines: 1,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Color(0xFF1F2937)),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            label,
+            maxLines: 1,
+            style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280), fontWeight: FontWeight.w500),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTableRow(String label, String val1, String val2) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: Text(label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF374151))),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(val1, textAlign: TextAlign.center, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF1F2937))),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(val2, textAlign: TextAlign.center, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: Color(0xFF1F2937))),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoCard(String title, String value, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.withOpacity(0.1)),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 4, offset: const Offset(0, 2)),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Icon(icon, size: 18, color: color),
+          ),
+          const SizedBox(height: 8),
+          Text(title, style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280), fontWeight: FontWeight.w500)),
+          const SizedBox(height: 4),
+          Text(value, style: const TextStyle(fontSize: 14, color: Color(0xFF1F2937), fontWeight: FontWeight.w700)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExpandableRow({required String title, required String power, required bool isExpanded, required VoidCallback onTap}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6, offset: const Offset(0, 2)),
+        ],
+      ),
+      child: Column(
+        children: [
+          InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(12),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  // Title Area
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(title, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: Color(0xFF1F2937))),
+                        const SizedBox(height: 4),
+                      ],
+                    ),
+                  ),
+                  // Power badge
+                  Row(
+                    children: [
+                      const Icon(Icons.bolt, color: Color(0xFF3B82F6), size: 16),
+                      Text(power, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF3B82F6))),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (isExpanded) ...[
+            const Divider(height: 1),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  _buildSubRow(Icons.history, 'Lifetime Energy', '352.96 MWh'),
+                  const SizedBox(height: 12),
+                  _buildSubRow(Icons.av_timer, 'Today Energy', '273.69 kWh'),
+                  const SizedBox(height: 12),
+                  _buildSubRow(Icons.flash_on, 'Live Power', '352.96 MWh'),
+                ],
+              ),
+            )
+          ]
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSubRow(IconData icon, String label, String value) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(4),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE0F2FE),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Icon(icon, size: 16, color: const Color(0xFF0284C7)),
+        ),
+        const SizedBox(width: 12),
+        Expanded(child: Text(label, style: const TextStyle(fontSize: 12, color: Color(0xFF4B5563)))),
+        Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF1F2937))),
+      ],
     );
   }
 }
