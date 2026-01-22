@@ -10,9 +10,9 @@
 
 ## 📱 App Screenshots
 
-| **Login** | **Detailed Summary** | **Home Dashboard** |
-|:---:|:---:|:---:|
-| <img src="https://projects.farhanshariar.com/apk-hub/login.jpg" alt="Home Screen" width="200"/> | <img src="https://projects.farhanshariar.com/apk-hub/sum.jpg" alt="Summary Page" width="200"/> | <img src="https://via.placeholder.com/250x500/6C5CE7/FFFFFF?text=Inverter+Details" alt="Inverter Details" width="200"/> |
+| **splash** | **Login** | **Detailed Summary** | **Home Dashboard** |
+|:---:|:---:|:---:|:---:|
+<img src="https://projects.farhanshariar.com/apk-hub/splash.png" alt="splash  Screen" width="200"/>| <img src="https://projects.farhanshariar.com/apk-hub/login.png" alt="Login Screen" width="200"/> | <img src="https://projects.farhanshariar.com/apk-hub/sum.png" alt="Summary Page" width="200"/> | <img src="https://projects.farhanshariar.com/apk-hub/home.png" alt="Home Screen" width="200"/> |
 
 > *Note: Place your actual screenshots in an `assets/screenshots/` folder and update the links above.*
 
