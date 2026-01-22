@@ -71,6 +71,27 @@ flutter:
     - assets/Batery.png
     - assets/solar.png
     - assets/tawer.png
+    - assets/u_1.png
+    - assets/u_2.png
+    - assets/u_3.png
+    - assets/u_4.png
+    - assets/u_6.png
+    - assets/u_5.png
+    - assets/d_2.png
+    - assets/d_3.png
+    - assets/d_4.png
+    - assets/d_1.png
+    - assets/p_1.png
+    - assets/p_2.png
+    - assets/p_3.png
+    - assets/p_4.png
+    - assets/solar_power.png
+    - assets/sun.png
+    - assets/moon.png
+    - assets/mid_day.png
+    - assets/t_1.png
+    - assets/t_2.png
+    - assets/t_3.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -34,7 +34,7 @@ class _SummaryScreenState extends State<SummaryScreen>
     final horizontalPadding = isTablet ? 24.0 : 12.0;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFD3DFF0),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -123,7 +123,7 @@ class _SummaryScreenState extends State<SummaryScreen>
             ),
           ),
 
-          SizedBox(height: isTablet ? 10 : 8),
+          SizedBox(height: 8),
 
           // ===== WHITE CONTAINER WITH TABS + DATA CARDS ONLY =====
           Expanded(
@@ -194,6 +194,7 @@ class _SummaryScreenState extends State<SummaryScreen>
               ),
             ),
           ),
+          SizedBox(height: 8),
 
           // ACTION BUTTONS GRID
           Padding(
@@ -204,7 +205,7 @@ class _SummaryScreenState extends State<SummaryScreen>
               crossAxisCount: isTablet ? 3 : 2,
               mainAxisSpacing: isTablet ? 12 : 5,
               crossAxisSpacing: isTablet ? 12 : 10,
-              childAspectRatio: isTablet ? 2.2 : 3.0,
+              childAspectRatio: isTablet ? 3.0 : 4.0,
               children: [
                 _buildActionButtonWithImage(
                   imagePath: 'assets/1.png',
@@ -239,8 +240,6 @@ class _SummaryScreenState extends State<SummaryScreen>
               ],
             ),
           ),
-
-          SizedBox(height: isTablet ? 12 : 10),
         ],
       ),
     );
@@ -248,68 +247,69 @@ class _SummaryScreenState extends State<SummaryScreen>
 
   // ===== WIDGET #3: SINGLE CHILD SCROLL VIEW (SCROLLABLE CONTENT) =====
   Widget _buildSummaryTab(bool isTablet, double horizontalPadding) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-      child: Column(
-        children: [
-          // ===== ELECTRICITY SECTION =====
-          Column(
-            children: [
-              Text(
-                'Electricity',
-                style: TextStyle(
-                  fontSize: isTablet ? 14 : 13,
-                  color: AppColors.textSecondary,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Divider(thickness: 1, color: Colors.grey[300]),
+    return Column(
+      children: [
+        // ===== ELECTRICITY
+        Column(
 
-              // Circular Progress Chart
-              SizedBox(
-                width: isTablet ? 200 : 140,
-                height: isTablet ? 200 : 140,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    CustomPaint(
-                      size: Size(isTablet ? 200 : 160, isTablet ? 200 : 160),
-                      painter: CircularProgressPainter(
-                        progress: 0.65,
-                        backgroundColor: AppColors.lightBlue.withOpacity(0.3),
-                        progressColor: AppColors.primary,
+          children: [
+            Text(
+              'Electricity',
+              style: TextStyle(
+                fontSize: isTablet ? 14 : 13,
+                color: AppColors.textSecondary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Divider(thickness: 1, color: Colors.grey[300]),
+
+            // Circular Progress Chart
+            SizedBox(
+              width: isTablet ? 200 : 140,
+              height: isTablet ? 200 : 140,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  CustomPaint(
+                    size: Size(isTablet ? 200 : 160, isTablet ? 200 : 160),
+                    painter: CircularProgressPainter(
+                      progress: 0.65,
+                      backgroundColor: Color(0xFF0097FC).withOpacity(0.3),
+                      progressColor: AppColors.primary,
+                    ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Total Power',
+                        style: TextStyle(
+                          fontSize: isTablet ? 14 : 12,
+                          color: AppColors.textSecondary,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Total Power',
-                          style: TextStyle(
-                            fontSize: isTablet ? 14 : 12,
-                            color: AppColors.textSecondary,
-                            fontWeight: FontWeight.w500,
-                          ),
+                      const SizedBox(height: 2),
+                      Text(
+                        '5.53 kw',
+                        style: TextStyle(
+                          fontSize: isTablet ? 24 : 20,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          '5.53 kw',
-                          style: TextStyle(
-                            fontSize: isTablet ? 24 : 20,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
+            ),
 
-              SizedBox(height: isTablet ? 20 : 10),
+            SizedBox(height: isTablet ? 20 : 10),
 
-              // Source/Load Toggle with Capsule Shape
-              Container(
+            // Source/Load Toggle with Capsule Shape
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Container(
                 decoration: BoxDecoration(
                   color: Colors.grey.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(30),
@@ -381,53 +381,75 @@ class _SummaryScreenState extends State<SummaryScreen>
                   ],
                 ),
               ),
-            ],
+            ),
+          ],
+        ),
+
+
+        Divider(thickness: 1, color: Colors.grey[300]),
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Column(
+              children: [
+                // ===== WIDGET #4: DATA VIEW CARDS =====
+                _buildDataViewCard(
+                  icon: null,
+                  imagePath: 'assets/solar.png',
+                  title: 'Data View',
+                  data1: '55505.63',
+                  data2: '58805.63',
+                  status: 'Active',
+                  statusColor: Color(0xFF0097FC),
+                  iconColor: Color(0xFF0097FC),
+                  isTablet: isTablet,
+                ),
+
+                SizedBox(height: isTablet ? 10 : 4),
+
+                _buildDataViewCard(
+                  icon: null,
+                  imagePath: 'assets/tawer.png',
+                  title: 'Data Type 2',
+                  data1: '55505.63',
+                  data2: '58805.63',
+                  status: 'Active',
+                  statusColor: Colors.blue,
+                  iconColor: AppColors.orange,
+                  isTablet: isTablet,
+                ),
+
+                SizedBox(height: isTablet ? 10 : 4),
+
+                _buildDataViewCard(
+                  icon: null,
+                  imagePath: 'assets/Batery.png',
+                  title: 'Data Type 3',
+                  data1: '55505.63',
+                  data2: '58805.63',
+                  status: 'Inactive',
+                  statusColor: Colors.red,
+                  iconColor: AppColors.cyan,
+                  isTablet: isTablet,
+                ),
+                SizedBox(height: isTablet ? 10 : 4),
+                _buildDataViewCard(
+                  icon: null,
+                  imagePath: 'assets/solar.png',
+                  title: 'Total Solar',
+                  data1: '55505.63 kW',
+                  data2: '58805.63 kWh',
+                  status: 'Active',
+                  statusColor: Colors.blue,
+                  iconColor: AppColors.blue,
+                  isTablet: isTablet,
+                ),
+              ],
+            ),
           ),
+        ),
 
-          Divider(thickness: 1, color: Colors.grey[300]),
-
-          // ===== WIDGET #4: DATA VIEW CARDS =====
-          _buildDataViewCard(
-            icon: null,
-            imagePath: 'assets/solar.png',
-            title: 'Data View',
-            data1: '55505.63',
-            data2: '58805.63',
-            status: 'Active',
-            statusColor: Colors.blue,
-            iconColor: AppColors.blue,
-            isTablet: isTablet,
-          ),
-
-          SizedBox(height: isTablet ? 10 : 4),
-
-          _buildDataViewCard(
-            icon: null,
-            imagePath: 'assets/tawer.png',
-            title: 'Data Type 2',
-            data1: '55505.63',
-            data2: '58805.63',
-            status: 'Active',
-            statusColor: Colors.blue,
-            iconColor: AppColors.orange,
-            isTablet: isTablet,
-          ),
-
-          SizedBox(height: isTablet ? 10 : 4),
-
-          _buildDataViewCard(
-            icon: null,
-            imagePath: 'assets/Batery.png',
-            title: 'Data Type 3',
-            data1: '55505.63',
-            data2: '58805.63',
-            status: 'Inactive',
-            statusColor: Colors.red,
-            iconColor: AppColors.cyan,
-            isTablet: isTablet,
-          ),
-        ],
-      ),
+      ],
     );
   }
 
@@ -444,7 +466,7 @@ class _SummaryScreenState extends State<SummaryScreen>
     String? imagePath,
   }) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Color(0xFFE6F5FF),
         borderRadius: BorderRadius.circular(12),
@@ -464,8 +486,8 @@ class _SummaryScreenState extends State<SummaryScreen>
         children: [
           // Icon Container
           Container(
-            width: 44,
-            height: 44,
+            width: 36,
+            height: 36,
             decoration: BoxDecoration(
               color: iconColor.withOpacity(0.15),
               borderRadius: BorderRadius.circular(8),
@@ -473,14 +495,14 @@ class _SummaryScreenState extends State<SummaryScreen>
             padding: const EdgeInsets.all(6),
             child: imagePath != null
                 ? Image.asset(
-                    imagePath,
-                    fit: BoxFit.contain,
-                  )
+              imagePath,
+              fit: BoxFit.contain,
+            )
                 : Icon(
-                    icon,
-                    color: iconColor,
-                    size: 24,
-                  ),
+              icon,
+              color: iconColor,
+              size: 24,
+            ),
           ),
           const SizedBox(width: 12),
 
@@ -567,7 +589,7 @@ class _SummaryScreenState extends State<SummaryScreen>
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.08),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: Colors.grey.withOpacity(0.15),

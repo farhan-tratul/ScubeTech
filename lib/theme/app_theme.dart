@@ -155,16 +155,6 @@ class AppTheme {
         iconTheme: IconThemeData(color: AppColors.textPrimary),
       ),
 
-      // Card Theme
-      cardTheme: CardTheme(
-        color: AppColors.cardBackground,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      ),
-
       // Input Decoration Theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,

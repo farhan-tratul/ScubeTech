@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
+import 'dart:async';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,23 +9,70 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool _isLT01Expanded = false;
-  bool _isLT02Expanded = false;
 
+  // Add current time tracking
+  late String _currentTime;
+  late String _currentTemp;
+  late String _currentImage;
+  late String _img;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize with default values
+    _currentTime = '11 AM - 12 PM';
+    _currentTemp = '28°C';
+    _currentImage = 'assets/t_1.png';
+    _img='asset/sun.png';
+    _updateCurrentTime();
+    // Update time every minute
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      _updateCurrentTime();
+    });
+  }
+  int _currentIndex = 0;// Add this variable
+
+  void _updateCurrentTime() {
+    setState(() {
+      _currentIndex = (_currentIndex + 1) % 3;
+
+      switch (_currentIndex) {
+        case 0:
+          _currentTime = '11AM-12PM';
+          _currentTemp = '28°C';
+          _currentImage = 'assets/t_1.png';
+          _img='assets/mid_day.png';
+          break;
+        case 1:
+          _currentTime = '12PM-1PM';
+          _currentTemp = '32°C';
+          _currentImage = 'assets/t_2.png';
+          _img='assets/moon.png';
+          break;
+        case 2:
+          _currentTime = '2PM-3PM';
+          _currentTemp = '30°C';
+          _currentImage = 'assets/t_3.png';
+          _img='assets/sun.png';
+          break;
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     // Define screen width helpers if needed, using standard padding from image
     const double horizontalPadding = 16.0;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA), // Light greyish-blue background
+      backgroundColor: const Color(0xFFD3DFF0), // Light greyish-blue background
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Color(0xFF1F2937)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false),
         ),
         title: const Text(
           '1st Page',
@@ -59,21 +106,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 4),
         ],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.only(bottom: 30),
+        padding: const EdgeInsets.only(bottom: 20),
         child: Column(
           children: [
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             // 1. Navigation Button (Cyan Gradient)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
               child: Container(
-                height: 48,
+                height: 36,
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: [Color(0xFF00C1E8), Color(0xFF00A9D4)],
@@ -114,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             // 2. Metrics Grid (3x2)
             Padding(
@@ -127,61 +174,61 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: _buildMetricCard(
                           value: '10000 kW',
                           label: 'Live AC Power',
-                          assetName: 'assets/live_ac.png',
+                          assetName: 'assets/u_1.png',
                           icon: Icons.bolt,
                           color: const Color(0xFF22C55E), // Green
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 6),
                       Expanded(
                         child: _buildMetricCard(
                           value: '82.58 %',
                           label: 'Plant Generation',
-                          assetName: 'assets/plant_gen.png',
+                          assetName: 'assets/u_2.png',
                           icon: Icons.factory_outlined,
                           color: const Color(0xFF00C1E8), // Cyan
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 6),
                       Expanded(
                         child: _buildMetricCard(
                           value: '85.61 %',
                           label: 'Live PR',
-                          assetName: 'assets/live_pr.png',
+                          assetName: 'assets/u_3.png',
                           icon: Icons.pie_chart_outline,
                           color: const Color(0xFF8B5CF6), // Purple
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 6),
                   Row(
                     children: [
                       Expanded(
                         child: _buildMetricCard(
                           value: '27.58 %',
                           label: 'Cumulative PR',
-                          assetName: 'assets/cumulative_pr.png',
+                          assetName: 'assets/u_4.png',
                           icon: Icons.speed,
                           color: const Color(0xFF3B82F6), // Blue
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 6),
                       Expanded(
                         child: _buildMetricCard(
                           value: '10000 ৳',
-                          label: 'Return Inv',
-                          assetName: 'assets/return_pv.png',
+                          label: 'Return Pv',
+                          assetName: 'assets/u_5.png',
                           icon: Icons.currency_exchange,
                           color: const Color(0xFFF97316), // Orange
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 6),
                       Expanded(
                         child: _buildMetricCard(
                           value: '10000 kWh',
                           label: 'Total Energy',
-                          assetName: 'assets/total_energy.png',
+                          assetName: 'assets/u_6.png',
                           icon: Icons.hub_outlined,
                           color: const Color(0xFFD946EF), // Magenta
                         ),
@@ -192,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             // 3. Weather Widget (Split Card)
             Padding(
@@ -215,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       // Left: Temperature
                       Expanded(
-                        flex: 4,
+                        flex: 5,
                         child: Container(
                           padding: const EdgeInsets.all(16),
                           color: Colors.white,
@@ -223,18 +270,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
-                                    '30°C',
+                                    _currentTemp,
                                     style: TextStyle(
-                                      fontSize: 28,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.w700,
                                       color: Color(0xFF00C1E8), // Cyan text
                                     ),
                                   ),
                                   SizedBox(height: 4),
                                   Text(
-                                    'Module\nTemperature',
+                                    _currentTime,
                                     style: TextStyle(
                                       fontSize: 11,
                                       height: 1.2,
@@ -249,7 +296,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 60,
                                 width: 30,
                                 child: Image.asset(
-                                  'assets/thermometer.png',
+                                  _currentImage,
+                                  width: 30,
+                                  height: 60,
                                   fit: BoxFit.contain,
                                   errorBuilder: (c, e, s) => const Icon(Icons.device_thermostat, color: Colors.orange, size: 40),
                                 ),
@@ -304,7 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                               Image.asset(
-                                'assets/sun.png',
+                                _img,
                                 width: 40,
                                 height: 40,
                                 errorBuilder: (c,e,s) => const Icon(Icons.wb_sunny, color: Colors.yellow, size: 30),
@@ -319,7 +368,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             // 4. Data Comparison Table
             Padding(
@@ -340,7 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     // Table Header
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                       child: Row(
                         children: const [
                           Expanded(flex: 3, child: SizedBox()), // Spacer for label col
@@ -365,7 +414,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             // 5. Info Banner
             Padding(
@@ -373,7 +422,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: const Color(0xffEFF6FF), // Light blue tint
+                  color: Colors.white, // Light blue tint
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: Colors.blue.withOpacity(0.1)),
                 ),
@@ -385,7 +434,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.blue.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(4),
                       ),
-                      child: const Icon(Icons.solar_power, color: Color(0xFF3B82F6), size: 20),
+                      child: Image.asset(
+                        'assets/solar_power.png',  // or your preferred asset name
+                        width: 20,
+                        height: 20,
+                        errorBuilder: (c, e, s) => const Icon(Icons.solar_power, color: Color(0xFF3B82F6), size: 20),
+                      ),
                     ),
                     const SizedBox(width: 12),
                     const Expanded(
@@ -403,7 +457,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             // 6. Info Grid (3x2)
             Padding(
@@ -412,51 +466,42 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Row(
                     children: [
-                      Expanded(child: _buildInfoCard('Total AC Capacity', '3000 KW', Icons.speed, Colors.cyan)),
+                      Expanded(child: _buildInfoCard('Total AC Capacity', '3000 KW', Icons.speed, Colors.cyan, assetName: 'assets/p_1.png')),
                       const SizedBox(width: 12),
-                      Expanded(child: _buildInfoCard('Total DC Capacity', '3.727 MWp', Icons.memory, Colors.blue)),
+                      Expanded(child: _buildInfoCard('Total DC Capacity', '3.727 MWp', Icons.memory, Colors.blue, assetName: 'assets/p_2.png')),
                     ],
                   ),
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      Expanded(child: _buildInfoCard('Date of Commissioning', '17/07/2024', Icons.calendar_today, Colors.blue)),
+                      Expanded(child: _buildInfoCard('Date of Commissioning', '17/07/2024', Icons.calendar_today, Colors.blue,assetName: 'assets/p_3.png')),
                       const SizedBox(width: 12),
-                      Expanded(child: _buildInfoCard('Number of Inverter', '30', Icons.dns, Colors.blue)),
+                      Expanded(child: _buildInfoCard('Number of Inverter', '30', Icons.dns, Colors.blue,assetName: 'assets/p_4.png')),
                     ],
                   ),
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      Expanded(child: _buildInfoCard('Total AC Capacity', '3000 KW', Icons.speed, Colors.blue)),
+                      Expanded(child: _buildInfoCard('Total AC Capacity', '3000 KW', Icons.speed, Colors.blue,assetName: 'assets/p_1.png')),
                       const SizedBox(width: 12),
-                      Expanded(child: _buildInfoCard('Total DC Capacity', '3.727 MWp', Icons.memory, Colors.blue)),
+                      Expanded(child: _buildInfoCard('Total DC Capacity', '3.727 MWp', Icons.memory, Colors.blue,assetName: 'assets/p_2.png')),
                     ],
                   ),
                 ],
               ),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             // 7. Expandable Energy Cards
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
               child: Column(
                 children: [
-                  _buildExpandableRow(
-                    title: 'LT_01',
-                    power: '495.505 kWp / 440 kW',
-                    isExpanded: _isLT01Expanded,
-                    onTap: () => setState(() => _isLT01Expanded = !_isLT01Expanded),
-                  ),
+                  _buildEnergyCard(title: 'LT_01', power: '495.505 kWp / 440 kW'),
                   const SizedBox(height: 12),
-                  _buildExpandableRow(
-                    title: 'LT_01',
-                    power: '495.505 kWp / 440 kW',
-                    isExpanded: _isLT02Expanded,
-                    onTap: () => setState(() => _isLT02Expanded = !_isLT02Expanded),
-                  ),
+                  _buildEnergyCard(title: 'LT_02', power: '495.505 kWp / 440 kW'),
+                  const SizedBox(height: 12),
                 ],
               ),
             ),
@@ -470,7 +515,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildMetricCard({required String value, required String label, required String assetName, required IconData icon, required Color color}) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -478,11 +523,11 @@ class _HomeScreenState extends State<HomeScreen> {
           BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6, offset: const Offset(0, 2)),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
+          // Icon on left
           Container(
-            padding: const EdgeInsets.all(6),
+            padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
               color: color.withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
@@ -494,17 +539,25 @@ class _HomeScreenState extends State<HomeScreen> {
               errorBuilder: (c, e, s) => Icon(icon, size: 20, color: color),
             ),
           ),
-          const SizedBox(height: 10),
-          Text(
-            value,
-            maxLines: 1,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Color(0xFF1F2937)),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            label,
-            maxLines: 1,
-            style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280), fontWeight: FontWeight.w500),
+          const SizedBox(width: 8),
+          // Text on right
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  value,
+                  maxLines: 1,
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Color(0xFF1F2937)),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  label,
+                  maxLines: 1,
+                  style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280), fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -513,7 +566,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildTableRow(String label, String val1, String val2) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
       child: Row(
         children: [
           Expanded(
@@ -533,7 +586,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildInfoCard(String title, String value, IconData icon, Color color) {
+  Widget _buildInfoCard(String title, String value, IconData icon, Color color, {String? assetName}) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -544,28 +597,44 @@ class _HomeScreenState extends State<HomeScreen> {
           BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 4, offset: const Offset(0, 2)),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
+          // Icon/Image on left
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
               color: color.withOpacity(0.1),
               borderRadius: BorderRadius.circular(6),
             ),
-            child: Icon(icon, size: 18, color: color),
+            child: assetName != null
+                ? Image.asset(
+              assetName,
+              width: 22,
+              height: 22,
+              errorBuilder: (c, e, s) => Icon(icon, size: 18, color: color),
+            )
+                : Icon(icon, size: 18, color: color),
           ),
-          const SizedBox(height: 8),
-          Text(title, style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280), fontWeight: FontWeight.w500)),
-          const SizedBox(height: 4),
-          Text(value, style: const TextStyle(fontSize: 14, color: Color(0xFF1F2937), fontWeight: FontWeight.w700)),
+          const SizedBox(width: 10),
+          // Text on right
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280), fontWeight: FontWeight.w500)),
+                const SizedBox(height: 4),
+                Text(value, style: const TextStyle(fontSize: 14, color: Color(0xFF1F2937), fontWeight: FontWeight.w700)),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildExpandableRow({required String title, required String power, required bool isExpanded, required VoidCallback onTap}) {
+  Widget _buildEnergyCard({required String title, required String power}) {
     return Container(
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -575,55 +644,49 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Column(
         children: [
-          InkWell(
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(12),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
+          // Title left, Power right
+          Row(
+            children: [
+              // Title on left
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: Color(0xFF1F2937)),
+                ),
+              ),
+              // Power info on right
+              Row(
                 children: [
-                  // Title Area
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(title, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: Color(0xFF1F2937))),
-                        const SizedBox(height: 4),
-                      ],
-                    ),
-                  ),
-                  // Power badge
-                  Row(
-                    children: [
-                      const Icon(Icons.bolt, color: Color(0xFF3B82F6), size: 16),
-                      Text(power, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF3B82F6))),
-                    ],
-                  ),
+                  const Icon(Icons.bolt, color: Color(0xFF3B82F6), size: 16),
+                  const SizedBox(width: 4),
+                  Text(power, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF3B82F6))),
                 ],
               ),
-            ),
+            ],
           ),
-          if (isExpanded) ...[
-            const Divider(height: 1),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  _buildSubRow(Icons.history, 'Lifetime Energy', '352.96 MWh'),
-                  const SizedBox(height: 12),
-                  _buildSubRow(Icons.av_timer, 'Today Energy', '273.69 kWh'),
-                  const SizedBox(height: 12),
-                  _buildSubRow(Icons.flash_on, 'Live Power', '352.96 MWh'),
-                ],
-              ),
-            )
-          ]
+          const SizedBox(height: 6),
+          // 2x2 Grid of components (keep your current grid)
+          Row(
+            children: [
+              Expanded(child: _buildComponentItem(assetName: 'assets/d_1.png', label: 'Lifetime Energy', value: '352.96 MWh')),
+              const SizedBox(width: 12),
+              Expanded(child: _buildComponentItem(assetName: 'assets/d_2.png', label: 'Today Energy', value: '273.69 kWh')),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              Expanded(child: _buildComponentItem(assetName: 'assets/d_3.png', label: 'Live Power', value: '352.96 MWh')),
+              const SizedBox(width: 12),
+              Expanded(child: _buildComponentItem(assetName: 'assets/d_4.png', label: 'CO₂ Saved', value: '352.96 MWh')),
+            ],
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildSubRow(IconData icon, String label, String value) {
+  Widget _buildComponentItem({IconData? icon, String? assetName, required String label, required String value}) {
     return Row(
       children: [
         Container(
@@ -632,11 +695,25 @@ class _HomeScreenState extends State<HomeScreen> {
             color: const Color(0xFFE0F2FE),
             borderRadius: BorderRadius.circular(4),
           ),
-          child: Icon(icon, size: 16, color: const Color(0xFF0284C7)),
+          child: assetName != null
+              ? Image.asset(
+            assetName,
+            width: 16,
+            height: 16,
+            errorBuilder: (c, e, s) => Icon(icon ?? Icons.help_outline, size: 16, color: const Color(0xFF0284C7)),
+          )
+              : Icon(icon ?? Icons.help_outline, size: 16, color: const Color(0xFF0284C7)),
         ),
-        const SizedBox(width: 12),
-        Expanded(child: Text(label, style: const TextStyle(fontSize: 12, color: Color(0xFF4B5563)))),
-        Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF1F2937))),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(label, style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+              Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF1F2937))),
+            ],
+          ),
+        ),
       ],
     );
   }
