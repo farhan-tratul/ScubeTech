@@ -14,10 +14,6 @@
 |:---:|:---:|:---:|:---:|
 <img src="https://projects.farhanshariar.com/apk-hub/splash.png" alt="splash  Screen" width="200"/>| <img src="https://projects.farhanshariar.com/apk-hub/login.png" alt="Login Screen" width="200"/> | <img src="https://projects.farhanshariar.com/apk-hub/sum.png" alt="Summary Page" width="200"/> | <img src="https://projects.farhanshariar.com/apk-hub/home.png" alt="Home Screen" width="200"/> |
 
-> *Note: Place your actual screenshots in an `assets/screenshots/` folder and update the links above.*
-
----
-
 ## ✨ Key Features
 
 - **Real-Time Monitoring**: detailed view of Live AC Power, Plant Generation, and Performance Ratio (PR).
