@@ -9,12 +9,12 @@ class MetricCard extends StatelessWidget {
   final Color iconColor;
 
   const MetricCard({
-    Key? key,
+    super.key,
     required this.value,
     required this.label,
     required this.icon,
     required this.iconColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class MetricCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -39,7 +39,7 @@ class MetricCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: iconColor.withOpacity(0.1),
+                  color: iconColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Icon(
@@ -79,11 +79,11 @@ class WeatherWidget extends StatelessWidget {
   final String irradiance;
 
   const WeatherWidget({
-    Key? key,
+    super.key,
     required this.temperature,
     required this.windSpeed,
     required this.irradiance,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +127,7 @@ class WeatherWidget extends StatelessWidget {
             width: 40,
             height: 80,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Stack(
@@ -203,7 +203,7 @@ class WeatherWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.orange.withOpacity(0.3),
+              color: Colors.orange.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(
@@ -225,11 +225,11 @@ class DataComparisonRow extends StatelessWidget {
   final String todayValue;
 
   const DataComparisonRow({
-    Key? key,
+    super.key,
     required this.label,
     required this.yesterdayValue,
     required this.todayValue,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -276,12 +276,12 @@ class InfoCard extends StatelessWidget {
   final Color iconColor;
 
   const InfoCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.value,
     this.iconColor = AppColors.primary,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -290,14 +290,14 @@ class InfoCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border.withOpacity(0.5)),
+        border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: iconColor.withOpacity(0.1),
+              color: iconColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
@@ -340,11 +340,11 @@ class NavigateButton extends StatelessWidget {
   final bool isSecondary;
 
   const NavigateButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     this.isSecondary = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -393,13 +393,13 @@ class ExpandableEnergyCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const ExpandableEnergyCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.powerValue,
     required this.metrics,
     required this.isExpanded,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -408,7 +408,7 @@ class ExpandableEnergyCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border.withOpacity(0.5)),
+        border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
       ),
       child: Column(
         children: [
@@ -529,7 +529,7 @@ class DataViewCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const DataViewCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.data1,
@@ -537,7 +537,7 @@ class DataViewCard extends StatelessWidget {
     required this.isActive,
     required this.iconColor,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -551,7 +551,7 @@ class DataViewCard extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isActive ? AppColors.primary : AppColors.border.withOpacity(0.5),
+            color: isActive ? AppColors.primary : AppColors.border.withValues(alpha: 0.5),
             width: isActive ? 2 : 1,
           ),
         ),
@@ -560,7 +560,7 @@ class DataViewCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: iconColor.withOpacity(0.1),
+                color: iconColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
@@ -595,7 +595,7 @@ class DataViewCard extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
-                          color: isActive ? AppColors.success.withOpacity(0.2) : AppColors.error.withOpacity(0.2),
+                          color: isActive ? AppColors.success.withValues(alpha: 0.2) : AppColors.error.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
@@ -640,12 +640,12 @@ class ActionButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const ActionButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.label,
     required this.iconColor,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -657,14 +657,14 @@ class ActionButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.border.withOpacity(0.5)),
+          border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
         ),
         child: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: iconColor.withOpacity(0.1),
+                color: iconColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(

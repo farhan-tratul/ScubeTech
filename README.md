@@ -1,5 +1,6 @@
 # Scube - Solar Energy Monitoring App ☀️⚡
 
+[![Flutter CI](https://github.com/farhan-tratul/ScubeTech/actions/workflows/flutter.yml/badge.svg)](https://github.com/farhan-tratul/ScubeTech/actions/workflows/flutter.yml)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Flutter](https://img.shields.io/badge/Flutter-3.0%2B-02569B?logo=flutter)
 ![Dart](https://img.shields.io/badge/Dart-3.0%2B-0175C2?logo=dart)
@@ -34,6 +35,16 @@
 - **Assets**: Custom asset integration for high-fidelity icons.
 
 ---
+
+## 🧪 Testing
+
+Every push runs `flutter analyze` and `flutter test` on GitHub Actions (badge above). Widget tests in `test/app_flow_test.dart` check that:
+
+- the app opens on the splash screen and moves to login after 3 seconds
+- the login screen shows the branding, both input fields and the Login button
+- "Forgot password?" shows its message
+
+Writing these tests caught two layout and lifecycle bugs, both now fixed: the sign-up row overflowed on narrow screens, and delayed animations could start after a screen was closed.
 
 ## 🚀 Getting Started
 

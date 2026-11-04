@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen>
     _logoController.forward();
 
     Future.delayed(const Duration(milliseconds: 500), () {
-      _textController.forward();
+      if (mounted) _textController.forward();
     });
 
     // Navigate to login after 3 seconds

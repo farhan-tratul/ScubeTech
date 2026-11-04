@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -33,7 +33,8 @@ class _LoginScreenState extends State<LoginScreen>
 
     // Delay animation start by 500ms after screen loads
     Future.delayed(const Duration(milliseconds: 500), () {
-      _slideController.forward();
+      // The user may have left the screen before the delay ends.
+      if (mounted) _slideController.forward();
     });
   }
 
@@ -308,9 +309,11 @@ class _LoginScreenState extends State<LoginScreen>
 
                             const SizedBox(height: 16),
 
-                            // Sign Up Link
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            // Sign Up Link: Wrap so it moves to a second line
+                            // instead of overflowing on narrow screens or large text.
+                            Wrap(
+                              alignment: WrapAlignment.center,
+                              crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
                                 const Text(
                                   "Don't have any account? ",

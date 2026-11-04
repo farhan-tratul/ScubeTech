@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import '../theme/app_theme.dart';
-import '../widgets/reusable_components.dart';
 
 class SummaryScreen extends StatefulWidget {
-  const SummaryScreen({Key? key}) : super(key: key);
+  const SummaryScreen({super.key});
 
   @override
   State<SummaryScreen> createState() => _SummaryScreenState();
@@ -135,7 +134,7 @@ class _SummaryScreenState extends State<SummaryScreen>
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -149,7 +148,7 @@ class _SummaryScreenState extends State<SummaryScreen>
                       child: Container(
                         height: 38,
                         decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.08),
+                          color: Colors.grey.withValues(alpha: 0.08),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: TabBar(
@@ -274,7 +273,7 @@ class _SummaryScreenState extends State<SummaryScreen>
                     size: Size(isTablet ? 200 : 160, isTablet ? 200 : 160),
                     painter: CircularProgressPainter(
                       progress: 0.65,
-                      backgroundColor: Color(0xFF0097FC).withOpacity(0.3),
+                      backgroundColor: Color(0xFF0097FC).withValues(alpha: 0.3),
                       progressColor: AppColors.primary,
                     ),
                   ),
@@ -311,7 +310,7 @@ class _SummaryScreenState extends State<SummaryScreen>
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.1),
+                  color: Colors.grey.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 padding: const EdgeInsets.all(0),
@@ -471,12 +470,12 @@ class _SummaryScreenState extends State<SummaryScreen>
         color: Color(0xFFE6F5FF),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: Colors.grey.withOpacity(0.2),
+          color: Colors.grey.withValues(alpha: 0.2),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -489,7 +488,7 @@ class _SummaryScreenState extends State<SummaryScreen>
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: iconColor.withOpacity(0.15),
+              color: iconColor.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(8),
             ),
             padding: const EdgeInsets.all(6),
@@ -528,7 +527,7 @@ class _SummaryScreenState extends State<SummaryScreen>
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
-                        color: statusColor.withOpacity(0.15),
+                        color: statusColor.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
@@ -567,7 +566,7 @@ class _SummaryScreenState extends State<SummaryScreen>
           // Chevron Arrow
           Icon(
             Icons.chevron_right,
-            color: AppColors.textSecondary.withOpacity(0.5),
+            color: AppColors.textSecondary.withValues(alpha: 0.5),
             size: 20,
           ),
         ],
@@ -592,12 +591,12 @@ class _SummaryScreenState extends State<SummaryScreen>
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: Colors.grey.withOpacity(0.15),
+            color: Colors.grey.withValues(alpha: 0.15),
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
+              color: Colors.black.withValues(alpha: 0.04),
               blurRadius: 4,
               offset: const Offset(0, 1),
             ),
